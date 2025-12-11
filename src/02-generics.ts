@@ -2,70 +2,46 @@
  * Узагальнені типи (generics)
  */
 
-/***************** 1 *****************/
-function foo(value) {
-  console.log(value);
+/* ---------- 1. Базова generic-функція ---------- */
+function identity(value) {
+  return value;
 }
 
-foo(5);
-foo("hello");
-foo(false);
-foo([1, 2]);
-foo([1, "hello"]);
+const n = identity(42); // T виводиться як number
+const s = identity("hello"); // T виводиться як string
+console.log(n, s);
 
-interface User {
-  username: string;
-  age: number;
-}
-
-foo({ username: "mango", age: 5 });
-
-/***************** 2 *****************/
-function getFirstElement(arr) {
+/* ---------- 2. Generics з масивами ---------- */
+function firstElement(arr) {
   return arr[0];
 }
 
-getFirstElement([10, 20, 30]); // 10
-getFirstElement(["Alice", "Bob"]); // "Alice"
+const firstNum = firstElement([10, 20, 30]);
+const firstStr = firstElement(["Alice", "Bob"]);
+console.log(firstNum, firstStr);
 
-/***************** 3 *****************/
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
+/* ---------- 3. Обмеження ---------- */
+// Потрібно, щоб аргумент мав поле `length` — додаємо обмеження <T extends { length: number }>
+function logLength(arg) {
+  console.log("length:", arg.length);
+  return arg;
 }
 
-const mixedNums = shuffle([1, 2, 3, 4]);
-const mixedWords = shuffle(["apple", "banana", "cherry"]);
+logLength([1, 2, 3]);
+logLength("hello world");
+// logLength(42); // помилка: number не має length
 
-/***************** 4 *****************/
-function saveToStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
+/* ---------- 4. Дженерик інтерфейс: узагальнений тип API відповіді ---------- */
+type ApiResponse = {
+  data: "???";
+  status: number;
+};
 
-saveToStorage("user", "Jacob Peterson");
-saveToStorage("clicks", 8);
+type Todo = { id: number; title: string };
 
-function loadFromStorage(key) {
-  const item = localStorage.getItem(key);
-  if (item !== null) {
-    return JSON.parse(item);
-  }
-  return null;
-}
+const todosResponse = {
+  data: [{ id: 1, title: "Learn generics" }],
+  status: 200,
+};
 
-const user = loadFromStorage("user");
-const clicks = loadFromStorage("clicks");
-
-/***************** 5 *****************/
-function max(array, selector) {
-  return array.reduce((prev, curr) =>
-    selector(curr) > selector(prev) ? curr : prev
-  );
-}
-
-const products = [
-  { name: "Laptop", price: 1000 },
-  { name: "Phone", price: 800 },
-];
-
-const mostExpensive = max(products, (p) => p.price);
-// → { name: "Laptop", price: 1000 }
+console.log(todosResponse.data[0].title);
