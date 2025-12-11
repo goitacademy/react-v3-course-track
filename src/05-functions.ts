@@ -7,17 +7,17 @@
  */
 
 /***************** 1 *****************/
-const allUsers = [
+const userCollection = [
   { username: "poly", age: 20 },
   { username: "jacob", age: 30 },
   { username: "mango", age: 25 },
 ];
 
 function getUserNames(users) {
-  return users.map((user) => user.username);
+  return users.map((user) => {});
 }
 
-const names = getUserNames(allUsers);
+const names = getUserNames(userCollection);
 
 /***************** 2 *****************/
 function greet(username, age) {
@@ -37,12 +37,12 @@ interface User {}
 
 const jacob: User = {
   username: "Jacob",
-  greet: (message) => {
+  greet(message) {
     console.log(message);
   },
 };
 
-jacob.greet("Welcome!");
+jacob.greet("Welcome");
 
 /***************** 4 *****************/
 interface Player {
@@ -59,10 +59,10 @@ const allPlayers: Player[] = [
 interface GamePlatform {}
 
 const platform: GamePlatform = {
-  getOnlinePlayers: (players) => {
+  getOnlinePlayers(players) {
     return players.filter((player) => player.isOnline);
   },
-  getPlayerNames: (players) => {
+  getPlayerNames(players) {
     return players.map((player) => player.username);
   },
 };

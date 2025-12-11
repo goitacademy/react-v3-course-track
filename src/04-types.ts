@@ -1,6 +1,6 @@
 /**
  * - Union
- * - Літеральні типи ( )
+ * - Літеральні типи
  */
 
 /***************** 1 *****************/
@@ -16,4 +16,5 @@ const order = {
   total: 120,
   delivery: "courier",
   deliveryTime: "afternoon",
+  status: "shipped",
 };
