@@ -32,12 +32,15 @@ logLength("hello world");
 // logLength(42); // помилка: number не має length
 
 /* ---------- 4. Дженерик інтерфейс: узагальнений тип API відповіді ---------- */
-type ApiResponse = {
+interface ApiResponse {
   data: "???";
   status: number;
 };
 
-type Todo = { id: number; title: string };
+interface Todo { 
+  id: number; 
+  title: string 
+};
 
 const todosResponse = {
   data: [{ id: 1, title: "Learn generics" }],
