@@ -11,8 +11,6 @@ const getData = () => {
   });
 };
 
-getData().then((result) => console.log(result)); // Hello, TypeScript!
-
 /* ---------- 2. Promise<T> з об'єктом ---------- */
 interface User {
   id: number;
@@ -25,9 +23,8 @@ const getUser = () => {
   });
 };
 
-getUser().then((user) => console.log(user.name)); // Alice
-
 /* ---------- 3. Promise<T> з масивом об'єктів ---------- */
+
 const getUsers = () => {
   return new Promise((resolve) => {
     setTimeout(
@@ -36,9 +33,7 @@ const getUsers = () => {
           { id: 1, name: "Alice" },
           { id: 2, name: "Bob" },
         ]),
-      300
+      300,
     );
   });
 };
-
-getUsers().then((users) => console.log(users[0].name)); // Alice

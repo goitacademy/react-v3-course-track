@@ -36,12 +36,3 @@ interface User {
 // Проти Pick — виключає наведені поля
 // type WithoutEmail = Omit<User, "email">;
 // const we = { id: 2, name: "NoEmail" };
-
-type All = "a" | "b" | "c";
-/* ---------- Exclude<T, U> ---------- */
-// Exclude<T, U> — прибирає з об'єднання ті підтипи, які сумісні з U
-// type Some = Exclude<All, "b">; // 'a' | 'c'
-
-/* ---------- Extract<T, U> ---------- */
-// Extract<T, U> — залишає тільки ті підтипи з T, які сумісні з U
-// type OnlyB = Extract<All, "b" | "x">; // 'b'

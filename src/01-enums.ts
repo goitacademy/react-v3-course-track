@@ -1,10 +1,10 @@
 /**
- * Перелічення (enum) - це список іменованих констант, які можна використовувати як змінні.
+ * Перелічення (enum) - це список іменованих констант, які можна використовувати як значення, а не тип.
  *
  * - Union type (наприклад: "pending" | "fulfilled") - легший і часто кращий вибір,
- *   якщо вам потрібен тільки набір допустимих значень на рівні типів.
+ *   якщо вам потрібен тільки набір допустимих типів.
  * - Enum створює реальний об'єкт в рантаймі (корисно для значень, які
- *   потрібно перевіряти або передавати як значення під час виконання).
+ *   потрібно перевіряти або передавати як значення в коді).
  *
  * Правило: якщо не потрібен runtime-об'єкт - візьміть union type.
  */
@@ -28,7 +28,7 @@ let s1: StatusUnion = "pending";
 let s2: StatusEnum = StatusEnum.Pending;
 // console.log(StatusEnum.Pending) // => "pending"
 
-/* ---------- 2. Numeric enums і зворотне відображення ---------- */
+/* ---------- 2. Numeric enums ---------- */
 enum HTTPCode {
   Success = 200,
   Created = 201,
@@ -37,7 +37,6 @@ enum HTTPCode {
 }
 
 const code: HTTPCode = HTTPCode.Success;
-// Numeric enums мають двостороннє відображення: HTTPCode[200] === "Success"
 
 /* ---------- 3. String enums (стабільні і зрозумілі) ---------- */
 enum Role {
@@ -55,45 +54,3 @@ const user: User = {
   username: "jacob",
   role: Role.Guest,
 };
-
-/* ---------- 4. Enum у switch/case ---------- */
-function handleStatus(s: StatusEnum) {
-  switch (s) {
-    case StatusEnum.Pending:
-      return "Waiting";
-    case StatusEnum.Fulfilled:
-      return "Done";
-    case StatusEnum.Rejected:
-      return "Failed";
-  }
-}
-
-const statusText = handleStatus(StatusEnum.Pending);
-console.log(statusText);
-
-/* ---------- 5. Поради / best practices ---------- */
-// - Використовуйте union types, коли вам потрібен лише набір допустимих значень.
-// - Використовуйте string enums, коли потрібен runtime-об'єкт (наприклад, для
-//   передачі, перебору або коли значення повинні бути стабільними і читабельними).
-// - Уникайте змішаних (гетерогенних) enum без явної причини.
-
-/* ---------- 6. Короткі приклади використання ---------- */
-// Union usage
-function updateStatus(u: StatusUnion) {
-  // union гарантує тільки перелік значень на етапі компіляції
-  // runtime-значення - звичайний рядок
-  return `status: ${u}`;
-}
-
-// Використання Enum для перевірок значень, а не просто типів
-function getHttpMessage(code: HTTPCode) {
-  if (code === HTTPCode.Success) return "OK";
-  if (code === HTTPCode.ServerError) return "Server error";
-  return "Other";
-}
-
-// Використовуємо приклади щоб уникнути "unused" помилок
-console.log(updateStatus("fulfilled"));
-
-const httpMessage = getHttpMessage(HTTPCode.Created);
-console.log(httpMessage);
